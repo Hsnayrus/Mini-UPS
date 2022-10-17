@@ -1,0 +1,14 @@
+- Bounds of the world:
+    Knowing the bounds of the world would help a lot in ruling out invalid addresses like (2^64, 2^64). It would definitely improve error handling
+
+- Multiple client connections:
+    Not allowing Multiple client connections severely limits the scalability of any server and would also make the server unusable if more than one client 
+    were trying to connect
+
+- Messages integrity:
+    We should be able to make sure that the messages received are the ones the sender actually sent. Since the payment is already done, there should be 
+    no tampering with the contents of a message received from amazon like increasing the quantity of a product
+
+- There is a strict reliance on in order message consumption once the server is initially started (i.e., sending a raw string with World ID and waiting for basic Amazon response),
+currently there is no support for deviations from this message pattern, so the server will break if messages are received out of order. It might be good to account for this with
+retries and timeouts in the initial bring up process.

@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h1>My Packages</h1>
+    <h4 style="color: #0c75d2">Account # {{ ups_account.acct_number }}</h4>
+{#    <h2>user.id {{ request.user.id }}</h2>#}
+    <h1 style="font-size: small"><i>displaying packages associated with this account</i></h1>
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">Package Status</th>
+            <th scope="col">Delivery Address</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for package in packages %}
+            <tr>
+                <td>{{package.status}}</td>
+                <td>({{package.destination_pos_x}}, {{ package.destination_pos_y }})</td>
+                {% if package.status == "waiting to be picked up" %}
+                    <td><a href="/packages/edit/{{package.package_id}}" class="btn btn-sm btn-primary">Change Delivery Address</a></td>
+                {% endif %}
+                <td><a href="/packages/detail/{{package.package_id}}" class="btn btn-sm btn-primary">Order Details</a></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <br>
+    <br>
+    <br>
+    {% if request.user.username == "luismor2" %}
+        <div style="text-align: center">
+            <a href="/packages/create/" class="btn btn-lg btn-primary">Create A New Package (ADMIN ONLY)</a>
+        </div>
+    {% endif %}
+    <br>
+    <br>
+    {% if request.user.username == "luismor2" %}
+        <div style="text-align: center">
+            <a href="/accounts/ups/create/" class="btn btn-lg btn-primary">Create A New UPS Account (ADMIN ONLY)</a>
+        </div>
+    {% endif %}
+    <br>
+    <br>
+
+
+    <h4 style="color: darkcyan; text-align: center"><i>Search For Packages Without An Account</i></h4>
+    <div style="text-align: center">
+        <form action="/packages/detail/" method="get">
+            <input name="q" type="text" placeholder="Tracking #" aria-label="Track By Number">
+            <button type="submit">Search</button>
+        </form>
+    </div>
+    <br>
+{% endblock %}

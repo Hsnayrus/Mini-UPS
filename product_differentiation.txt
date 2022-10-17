@@ -1,0 +1,31 @@
+Image with Product:
+    We have implemented a feature where the customer can look at an image of the package that is being transported.
+    In our current implementation we just show a default image for everything. But it can be updated to showing the Product
+    link or even the product image from amazon's side provided they have it
+
+New Account Registration:
+    Allow users to register with ups using their own username and password credentials and specify their email address for later communication
+
+
+Timestamps for delivery:
+    We thought of giving as much detail as we can to the user and implementing product timestamps was one of the parameters that we thought
+    would be useful for users.
+
+Email updates for change in status:
+   Customers will be prompted when their orders are waiting to be picked up, loaded, and finally delivered to their final destination
+    
+
+Display Username for Logged in Users
+    Customers that log in to the UPS website with their credentials will see a personalized version of the site that
+    displays their username at the top and allows them to see the set of all packages that are assocated with their
+    account
+
+
+Multithreaded request handling:
+    Multithreading allows us to efficiently scale with increased client activity and prevent long user delays
+
+
+Frontend Super User Admin Page:
+    Allow a designated superuser (username="luismor2") to create packages via the UPS front-end. This is a feature that
+    was useful in our own testing and would be useful if this were a real web-site for dev deployments.
+

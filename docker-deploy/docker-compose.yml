@@ -1,0 +1,53 @@
+version: '2'
+
+services:
+  ups:
+    build: ./ups_server
+    volumes:
+      - .:/ups
+    command: bash -c "sleep 5 && python3 /back_end/server.py"
+    expose:
+      - "8888"
+    ports:
+      - "8888:8888"
+    depends_on:
+      - db
+      - web
+
+
+
+
+  db:
+    image: postgres
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=passw0rd
+    volumes:
+      - data-volume:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  web:
+    build: ./mini_ups
+    user: nobody
+    command: bash -c "python3 manage.py makemigrations && python3 manage.py makemigrations deliveries && python3 manage.py migrate && python3 manage.py runserver 0.0.0.0:8000"
+    volumes:
+      - ./mini_ups:/code
+    expose:
+      - "8000"
+    ports:
+      - "587:587"
+    depends_on:
+      - db
+
+  nginx:
+    image: nginx:latest
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./nginx/config:/etc/nginx/conf.d
+    depends_on:
+      - web
+volumes:
+  data-volume:

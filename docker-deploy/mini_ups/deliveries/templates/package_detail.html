@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <h1>Package Details</h1>
+
+    <img src="{% static 'deliveries/image/package.jpeg' %}" alt="Package Icon">
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">Status</th>
+            <th scope="col">Tracking #</th>
+            <th scope="col">Truck ID</th>
+            <th scope="col">UPS Account Username</th>
+            <th scope="col">Delivery Address</th>
+            <th scope="col">Warehouse ID</th>
+            <th scope="col">Warehouse Location</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>{{ selected_package.status }}</td>
+            <td>{{ selected_package.package_id }}</td>
+            <td>{{ selected_package.truck.truck_id }}</td>
+            <td>{{ selected_package.ups_account.user.username }}</td>
+            <td>({{ selected_package.destination_pos_x }}, {{ selected_package.destination_pos_y }})</td>
+            <td>{{ selected_package.warehouse_id }}</td>
+            <td>({{ selected_package.warehouse_pos_x }}, {{ selected_package.warehouse_pos_y }})</td>
+        </tr>
+        </tbody>
+    </table>
+    {% if request.user.is_authenticated %}
+        <div style="text-align: center">
+            <a href="/accounts/home/" class="btn btn-lg btn-primary">Back To My Account</a>
+        </div>
+    {% endif %}
+    <br>
+    <br>
+    <br>
+    <h4 style="color: darkcyan; text-align: center"><i>Search For Packages Without An Account</i></h4>
+    <div style="text-align: center">
+        <form action="/packages/detail/" method="get">
+            <input name="q" type="text" placeholder="Tracking #" aria-label="Track By Number">
+            <button type="submit">Search</button>
+        </form>
+    </div>
+{% endblock %}
